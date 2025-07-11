@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: <ECR_URI>/train
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5000
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: mlflow.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+env:
+  MLFLOW_S3_ENDPOINT_URL: "https://s3.us-west-2.amazonaws.com"
+  BACKEND_STORE_URI: "postgresql://mlflow:<password>@<rds-hostname>:5432/mlflowdb"
+  ARTIFACT_ROOT: "s3://mlflow-artifacts/"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

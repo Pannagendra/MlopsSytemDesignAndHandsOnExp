@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mlflow.fullname" . }}
+  labels:
+    app: {{ include "mlflow.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "mlflow.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "mlflow.name" . }}
+    spec:
+      serviceAccountName: mlflow-sa  # IRSA enabled
+      containers:
+        - name: mlflow
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["mlflow", "server"]
+          args:
+            - "--backend-store-uri=$(BACKEND_STORE_URI)"
+            - "--default-artifact-root=$(ARTIFACT_ROOT)"
+            - "--host=0.0.0.0"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MLFLOW_S3_ENDPOINT_URL
+              value: "{{ .Values.env.MLFLOW_S3_ENDPOINT_URL }}"
+            - name: BACKEND_STORE_URI
+              value: "{{ .Values.env.BACKEND_STORE_URI }}"
+            - name: ARTIFACT_ROOT
+              value: "{{ .Values.env.ARTIFACT_ROOT }}"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
