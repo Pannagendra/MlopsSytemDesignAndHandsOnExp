@@ -1,5 +1,4 @@
 # MlopsSytemDesignAndHandsOnExp
-Here's a **production-grade `README.md`** for your MLOps repository, written to guide both newcomers and experienced contributors through your architecture, setup, and usage:
 
 ---
 
