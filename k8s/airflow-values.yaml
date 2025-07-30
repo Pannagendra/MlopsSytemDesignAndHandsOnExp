@@ -1,0 +1,23 @@
+executor: KubernetesExecutor
+
+webserver:
+  defaultUser:
+    enabled: true
+    username: admin
+    password: admin
+
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/Pannagendra/MlopsSytemDesignAndHandsOnExp.git
+    branch: main
+    subPath: dags
+
+logs:
+  persistence:
+    enabled: true
+    size: 1Gi
+
+postgresql:
+  enabled: true
+  postgresqlPassword: airflow

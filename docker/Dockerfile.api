@@ -1,0 +1,15 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install FastAPI + Uvicorn + other deps
+COPY serving/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy model serving code
+COPY serving/app/ ./app/
+
+EXPOSE 80
+
+# Entrypoint
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

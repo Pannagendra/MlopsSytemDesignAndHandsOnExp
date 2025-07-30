@@ -1,0 +1,36 @@
+name: MLOps CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-train-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Train Model
+      run: |
+        python training/train.py
+
+    - name: Log to MLflow
+      run: |
+        python training/log_to_mlflow.py
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t pannagendra/mlops-model:latest -f docker/Dockerfile.api .
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker push pannagendra/mlops-model:latest

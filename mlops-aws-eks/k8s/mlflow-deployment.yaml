@@ -1,7 +1,0 @@
-k8s/charts/mlflow/
-├── Chart.yaml
-├── values.yaml
-├── templates/
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── ingress.yaml
