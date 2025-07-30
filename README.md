@@ -4,13 +4,13 @@ Here's a **production-grade `README.md`** for your MLOps repository, written to 
 ---
 
 ````markdown
-# 🚀 MLOps System Design and Hands-on Experience
+#  MLOps System Design and Hands-on Experience
 
 This repository is a **one-stop MLOps solution** for building, deploying, and managing machine learning models in production using industry-standard tools such as **Kubernetes, MLflow, Airflow, Terraform, Docker, FastAPI, and KServe**.
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```plaintext
 .
