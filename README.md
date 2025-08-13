@@ -188,4 +188,10 @@ Made with ❤️ by [Pannagendra KL](https://github.com/Pannagendra)
 This project is licensed under the MIT License.
 
 ```
+```
+Built with ❤️ for the MLOPS community
+
+⭐ Star this repo if it helped you build better MLOPS systems!
+
+```
 
