@@ -1,70 +1,86 @@
-Production-Grade MLOps Pipeline on AWS EKS
-🏗️ High-Level Architecture
+# 🚀 Production-Grade MLOps Pipeline on AWS EKS
+
+<div align="center">
+
+![MLOps Architecture](https://img.shields.io/badge/Architecture-Production%20Ready-success?style=for-the-badge)
+![AWS](https://img.shields.io/badge/AWS-Cloud%20Native-orange?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Container%20Orchestration-blue?style=for-the-badge&logo=kubernetes&logoColor=white)
+
+</div>
+
+---
+
+## 🏗️ High-Level Architecture
+
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                           AWS Cloud                             │
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────┐    │
 │  │                    EKS Cluster                          │    │
 │  │                                                         │    │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │    │
-│  │  │   Airflow   │  │   MLflow    │  │  Prometheus │    │    │
-│  │  │ Scheduler   │  │   Server    │  │  & Grafana  │    │    │
-│  │  │ & Workers   │  │             │  │             │    │    │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘    │    │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │    │
+│  │  │   Airflow   │  │   MLflow    │  │  Prometheus │      │    │
+│  │  │ Scheduler   │  │   Server    │  │  & Grafana  │      │    │
+│  │  │ & Workers   │  │             │  │             │      │    │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘      │    │
 │  │                                                         │    │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │    │
-│  │  │   FastAPI   │  │   KServe    │  │   Ingress   │    │    │
-│  │  │ Model API   │  │   Serving   │  │ Controller  │    │    │
-│  │  │             │  │             │  │             │    │    │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘    │    │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐      │    │
+│  │  │   FastAPI   │  │   KServe    │  │   Ingress   │      │    │
+│  │  │ Model API   │  │   Serving   │  │ Controller  │      │    │
+│  │  │             │  │             │  │             │      │    │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘      │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                                                                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
-│  │     S3      │  │     RDS     │  │     ECR     │            │
-│  │  (Data &    │  │(PostgreSQL) │  │ (Container  │            │
-│  │ Artifacts)  │  │             │  │  Registry)  │            │
-│  └─────────────┘  └─────────────┘  └─────────────┘            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │     S3      │  │     RDS     │  │     ECR     │              │
+│  │  (Data &    │  │(PostgreSQL) │  │ (Container  │              │
+│  │ Artifacts)  │  │             │  │  Registry)  │              │
+│  └─────────────┘  └─────────────┘  └─────────────┘              │
 │                                                                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
-│  │ CloudWatch  │  │     VPC     │  │     IAM     │            │
-│  │  (Logging)  │  │ (Networking)│  │   (Auth)    │            │
-│  └─────────────┘  └─────────────┘  └─────────────┘            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │ CloudWatch  │  │     VPC     │  │     IAM     │              │
+│  │  (Logging)  │  │ (Networking)│  │   (Auth)    │              │
+│  └─────────────┘  └─────────────┘  └─────────────┘              │
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
 │                      External Systems                           │
 │                                                                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
-│  │   GitHub    │  │   DVC       │  │   CI/CD     │            │
-│  │  (Code)     │  │(Data Ver.)  │  │ (Actions)   │            │
-│  └─────────────┘  └─────────────┘  └─────────────┘            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │   GitHub    │  │   DVC       │  │   CI/CD     │              │
+│  │  (Code)     │  │(Data Ver.)  │  │ (Actions)   │              │
+│  └─────────────┘  └─────────────┘  └─────────────┘              │
 └─────────────────────────────────────────────────────────────────┘
+```
 
+---
 
+## 📋 MLOps Platform Architecture Overview
 
-# MLOps Platform: High-Level Architecture Overview
+This architecture provides a comprehensive MLOps platform utilizing AWS cloud services and Kubernetes orchestration for scalable, production-ready machine learning operations.
 
-## 1. High-Level Architecture Diagram
+### 🎯 **Core Components**
 
-# [Diagram Placeholder]
-# (To be rendered in draw.io, Lucidchart, or Mermaid for visuals)
-# 
-# Components:
-# - GitHub/GitLab → CI/CD (GitHub Actions or Jenkins)
-# - DVC ↔ S3
-# - MLflow Tracking → RDS (PostgreSQL) + S3
-# - Training Jobs on EKS (Dockerized)
-# - Airflow DAGs (running on EKS)
-# - MLflow Registry
-# - FastAPI/KServe (EKS)
-# - Prometheus + Grafana (EKS)
-# - Logs → AWS CloudWatch
-# - Ingress via NGINX/ALB + TLS + DNS (e.g., mlflow.myorg.com)
+**Infrastructure Layer:**
+- GitHub/GitLab → CI/CD (GitHub Actions or Jenkins)
+- DVC ↔ S3
+- MLflow Tracking → RDS (PostgreSQL) + S3
+- Training Jobs on EKS (Dockerized)
+- Airflow DAGs (running on EKS)
+- MLflow Registry
+- FastAPI/KServe (EKS)
+- Prometheus + Grafana (EKS)
+- Logs → AWS CloudWatch
+- Ingress via NGINX/ALB + TLS + DNS (e.g., mlflow.myorg.com)
 
-## 2. Kubernetes YAMLs (Simplified)
+---
 
-### MLflow Deployment
-# (Use Helm chart or Kustomize preferred)
+## ⚙️ Kubernetes Configurations
+
+### 🔧 **MLflow Deployment**
+
+```yaml
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -97,9 +113,11 @@ spec:
                   key: secret_key
           ports:
             - containerPort: 5000
+```
 
----
-### Airflow Helm Values (via Astronomer Chart)
+### 🌬️ **Airflow Helm Values** (via Astronomer Chart)
+
+```yaml
 webserver:
   service:
     type: ClusterIP
@@ -123,11 +141,15 @@ executor: KubernetesExecutor
 logs:
   persistence:
     enabled: false
+```
 
----
-### Prometheus and Grafana via Helm
+### 📊 **Prometheus and Grafana Configuration**
+
+```bash
 # helm install prometheus prometheus-community/kube-prometheus-stack
-# Configure via `values.yaml`
+```
+
+```yaml
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
@@ -144,24 +166,36 @@ grafana:
       - secretName: grafana-tls
         hosts:
           - grafana.myorg.com
+```
 
-## 3. Docker Setup
+---
 
-### Dockerfile for Training
+## 🐳 Docker Configuration
+
+### **Training Dockerfile**
+
+```dockerfile
 FROM python:3.10
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 CMD ["python", "train.py"]
+```
 
-### Dockerfile for FastAPI Serving
+### **FastAPI Serving Dockerfile**
+
+```dockerfile
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 COPY ./app /app
+```
 
-## 4. CI/CD Pipelines (GitHub Actions)
+---
 
-### .github/workflows/mlops-pipeline.yml
+## 🔄 CI/CD Pipelines (GitHub Actions)
+
+### **MLOps Pipeline Configuration**
+
 ```yaml
 name: MLOps Pipeline
 on:
@@ -199,9 +233,12 @@ jobs:
         run: kubectl apply -f k8s/deployment.yaml
 ```
 
-## 5. Monitoring Config
+---
 
-### Prometheus scrape config (example)
+## 📈 Monitoring Configuration
+
+### **Prometheus Scrape Configuration**
+
 ```yaml
 scrape_configs:
   - job_name: 'airflow'
@@ -213,23 +250,29 @@ scrape_configs:
         regex: airflow
 ```
 
-### Grafana Dashboard
+### **Grafana Dashboard**
 - Use Airflow, MLflow, KServe exporters
 - Dashboard panels: pipeline duration, success rate, training time, drift alerts
 
-## 6. Security & Access Management
+---
 
+## 🔐 Security & Access Management
+
+### **Security Features:**
 - **IRSA**: IAM Role for Service Account for MLflow, Airflow to access S3, RDS
-- **TLS**: Cert-Manager for automatic HTTPS certs
+- **TLS**: Cert-Manager for automatic HTTPS certificates
 - **RBAC**: RoleBindings for Airflow and MLflow UIs
 
-## 7. Infrastructure as Code (Terraform Sample)
+---
 
-### EKS & VPC
+## 🏛️ Infrastructure as Code (Terraform)
+
+### **EKS & VPC Configuration**
 - `terraform-aws-eks` module
 - `terraform-aws-vpc` module
 
-### Sample block
+### **Sample Terraform Block**
+
 ```hcl
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
@@ -251,43 +294,41 @@ module "eks" {
 }
 ```
 
-## 8. External Access URLs
+---
 
-- `https://mlflow.myorg.com` → MLflow UI
-- `https://airflow.myorg.com` → Airflow UI
-- `https://grafana.myorg.com` → Dashboards
+## 🌐 External Access URLs
+
+<div align="center">
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **MLflow** | `https://mlflow.myorg.com` | MLflow UI & Tracking |
+| **Airflow** | `https://airflow.myorg.com` | Workflow Management |
+| **Grafana** | `https://grafana.myorg.com` | Monitoring Dashboards |
+
+</div>
 
 ---
 
-## 🔍 Optimization Recommendations
-- Use EKS Managed Node Groups with mixed On-Demand and Spot
-- Enable Cluster Autoscaler
-- Configure Resource Requests/Limits
-- Use S3 Lifecycle Rules for artifacts
-- Use NVIDIA GPU node group with tolerations for model training
+## ⚡ Optimization Recommendations
 
-## 📁 Repo Structure
-```bash
-.
-├── .github/workflows/
-│   └── mlops-pipeline.yml
-├── k8s/
-│   ├── mlflow-deployment.yaml
-│   ├── airflow-values.yaml
-│   ├── ingress.yaml
-├── terraform/
-│   ├── eks.tf
-│   ├── vpc.tf
-│   ├── rds.tf
-├── docker/
-│   ├── Dockerfile.train
-│   └── Dockerfile.api
-├── training/
-│   ├── train.py
-│   └── log_to_mlflow.py
-└── serving/
-    └── app/
-        ├── main.py
-        └── model_loader.py
-```
+<div align="left">
 
+- **EKS Configuration**: Use EKS Managed Node Groups with mixed On-Demand and Spot instances
+- **Auto Scaling**: Enable Cluster Autoscaler for dynamic resource management
+- **Resource Management**: Configure proper Resource Requests/Limits
+- **Storage Optimization**: Use S3 Lifecycle Rules for artifacts management
+- **GPU Support**: Use NVIDIA GPU node group with tolerations for model training
+- **Cost Optimization**: Implement cost allocation insights via CloudWatch
+
+</div>
+
+---
+
+<div align="center">
+
+### 🎯 **Production-Ready MLOps at Scale**
+
+*Built for reliability, scalability, and operational excellence*
+
+</div>
