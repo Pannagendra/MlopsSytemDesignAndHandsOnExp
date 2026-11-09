@@ -16,6 +16,11 @@
 
 This repository is a **one-stop MLOps solution** for building, deploying, and managing machine learning models in production using industry-standard tools such as **Kubernetes, MLflow, Airflow, Terraform, Docker, FastAPI, and KServe**.
 
+> **Why this repo:** an end-to-end MLOps system-design reference —
+> data → train → deploy → monitor — Kubernetes-native and cost-aware.
+> Shows the platform-architecture judgment behind running ML in production,
+> not just training a model.
+
 ---
 
 ## 📂 Project Structure
@@ -201,6 +206,25 @@ make deploy-k8s        # Apply all Kubernetes manifests
 
 ---
 
+## 📡 Observability & Day-2 Operations
+
+A model in production is an operations problem, not a training problem.
+The reliability layer this design assumes:
+
+| Concern | Tooling |
+|---|---|
+| Platform & service health | **Dynatrace** — DQL dashboards, multi-cluster SRE visibility, OneAgent/DynaKube |
+| Metrics & alerting | **Prometheus** / **Grafana** |
+| Incident lifecycle | **ServiceNow** ITSM — correlation and suppression |
+| Model quality | Drift detection, evaluation gates in CI |
+| Cost | Right-sizing, committed-spend modelling, autoscaling |
+
+Observability tool selection is an architecture decision with a cost model
+attached — capability fit, tenant/management-zone design, and multi-year
+spend all belong in the same conversation.
+
+---
+
 ## 📝 TODO and Improvements
 
 <div align="left">
@@ -225,25 +249,22 @@ make deploy-k8s        # Apply all Kubernetes manifests
 
 ---
 
-## 📬 Contact
-
-<div align="center">
-
-Made with ❤️ by [**Pannagendra KL**](https://github.com/Pannagendra)
-
-</div>
-
----
-
 ## 📄 License
 
 This project is licensed under the **MIT License**.
 
 ---
 
-<div align="center">
+## ✍️ More
 
-### Built with ❤️ for the MLOps community
+Architecture deep-dives on **[Medium](https://medium.com/@klpannagendra)** ·
+Connect on **[LinkedIn](https://www.linkedin.com/in/pannagendra-kl-28113055/)**
+
+<sub>Built by Panna — Agentic AI Platform Architect · Bangalore, India</sub>
+
+---
+
+<div align="center">
 
 ⭐ **Star this repo if it helped you build better MLOps systems!** ⭐
 
